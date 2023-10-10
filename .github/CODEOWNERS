@@ -1,0 +1,5 @@
+# Only infra-devops group can write files under .github/workflows directory
+/.github/workflows/**   @themsiqueira
+
+# Prevent modifications to the CODEOWNERS file
+/.github/CODEOWNERS     @themsiqueira
