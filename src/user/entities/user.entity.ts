@@ -6,7 +6,7 @@ export class UserEntity {
   id: string
 
   @OneToOne(() => PersonEntity)
-  @JoinColumn()
+  @JoinColumn({name: 'personId'})
   person: PersonEntity
 
   @Column()
