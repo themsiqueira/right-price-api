@@ -5,10 +5,12 @@ export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
+  @Column()
   name: string
 
   // verificar category
 
+  @Column()
   deletedAt: Date
 
   @Column()

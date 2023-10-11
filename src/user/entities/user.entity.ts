@@ -11,8 +11,10 @@ export class UserEntity {
   @Column()
   email: string
 
+  @Column()
   passwordHash: string
 
+  @Column()
   deletedAt: Date
 
   @Column()

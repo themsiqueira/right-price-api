@@ -5,12 +5,16 @@ export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
+  @Column()
   name: string
 
+  @Column()
   documentNumber: string
 
+  @Column()
   birthDate: Date
 
+  @Column()
   deletedAt: Date
 
   @Column()

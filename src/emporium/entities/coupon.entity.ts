@@ -11,6 +11,7 @@ export class CouponEntity {
   @Column()
   emporiumId: string
 
+  @Column()
   quantity: number
 
   @Column()
