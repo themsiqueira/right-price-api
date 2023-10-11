@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
-
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { UserEntity } from '@app/user/entities/user.entity'
 @Entity()
 export class EmporiumEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -12,8 +12,9 @@ export class EmporiumEntity {
   @Column()
   address: string
 
-  @Column()
-  userId?: string
+  @OneToOne(() => UserEntity)
+  @JoinColumn({ name: 'userId' })
+  userId?: UserEntity
 
   @Column()
   deletedAt: Date

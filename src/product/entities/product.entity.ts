@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm'
+import { PromotionEntity } from './promotion.entity'
 
 @Entity()
 export class ProductEntity {
@@ -16,6 +17,9 @@ export class ProductEntity {
   @Column()
   @CreateDateColumn()
   createdAt: Date
+
+  @ManyToOne(() => PromotionEntity, (promotion) => promotion.products)
+  promotion: PromotionEntity
 
   @Column()
   expiresAt: Date

@@ -1,12 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { PersonEntity } from './person.entity'
 
-@Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  // criar a relation - cardinalidade - 1:1
-  personId: string
+  @OneToOne(() => PersonEntity)
+  @JoinColumn()
+  person: PersonEntity
 
   @Column()
   email: string
