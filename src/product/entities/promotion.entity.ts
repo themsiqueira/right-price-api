@@ -16,13 +16,10 @@ export class PromotionEntity {
   emporiumId: EmporiumEntity
 
   @OneToOne(() => UserEntity)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'Reporter_userId' })
   user: UserEntity
   @Column()
   price: number
-
-  @Column()
-  validity: Date
 
   @Column()
   @CreateDateColumn()
