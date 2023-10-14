@@ -1,12 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
-import { PersonEntity } from './person.entity'
 
+import { PersonEntity } from '@app/user/entities/person.entity'
+
+@Entity()
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
   @OneToOne(() => PersonEntity)
-  @JoinColumn({name: 'personId'})
+  @JoinColumn({ name: 'personId' })
   person: PersonEntity
 
   @Column()

@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm'
-import { PromotionEntity } from './promotion.entity'
+
+import { PromotionEntity } from '@app/product/entities/promotion.entity'
 
 @Entity()
 export class ProductEntity {

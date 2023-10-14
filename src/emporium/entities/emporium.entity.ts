@@ -1,5 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+
 import { UserEntity } from '@app/user/entities/user.entity'
+
 @Entity()
 export class EmporiumEntity {
   @PrimaryGeneratedColumn('uuid')

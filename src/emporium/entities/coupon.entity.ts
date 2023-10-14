@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
-import { EmporiumEntity } from './emporium.entity'
+
+import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'
 
 @Entity()
 export class CouponEntity {

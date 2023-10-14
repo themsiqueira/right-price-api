@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, OneToOne, JoinColumn } from 'typeorm'
-import { ProductEntity } from './product.entity'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm'
+
+import { ProductEntity } from '@app/product/entities/product.entity'
 import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'
 import { UserEntity } from '@app/user/entities/user.entity'
 
