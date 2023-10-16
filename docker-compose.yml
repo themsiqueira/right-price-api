@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: ${environment}
+    container_name: api
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "test@local.com"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    ports:
+      - "15433:80"
+    depends_on:
+      - db
+    networks:
+      - network
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: preco-certo-database
+      POSTGRES_USER: precocerto
+      POSTGRES_PASSWORD: precocerto
+    ports:
+      - "45432:5432"
+    networks:
+      - network
+
+networks:
+  network:
+    name: preco-certo-network
+    driver: bridge
+
