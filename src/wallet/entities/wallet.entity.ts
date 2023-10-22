@@ -1,13 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  ManyToMany,
-  JoinTable,
-  OneToOne,
-  JoinColumn
-} from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, OneToOne, JoinColumn } from 'typeorm'
 
 import { CouponEntity } from '@app/emporium/entities/coupon.entity'
 import { UserEntity } from '@app/user/entities/user.entity'
