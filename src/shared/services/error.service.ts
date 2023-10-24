@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 
 import { StandardError, ValidationElement } from '@app/shared/interface/error.interface'
 import ErrorType from '@app/shared/constant/error.enum'
+import { has } from '@app/shared/helper/type-guard.helper'
 
 @Injectable()
 export class ErrorService {
