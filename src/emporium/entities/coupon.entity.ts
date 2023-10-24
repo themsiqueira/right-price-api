@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, Relation } from 'typeorm'
 
 import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'
 
@@ -12,7 +12,7 @@ export class CouponEntity {
 
   @OneToOne(() => EmporiumEntity)
   @JoinColumn({ name: 'couponId' })
-  emporium: EmporiumEntity
+  emporium: Relation<EmporiumEntity>
 
   @Column()
   quantity: number

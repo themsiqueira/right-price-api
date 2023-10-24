@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn, Relation } from 'typeorm'
 
 import { UserEntity } from '@app/user/entities/user.entity'
 
@@ -16,7 +16,7 @@ export class EmporiumEntity {
 
   @OneToOne(() => UserEntity)
   @JoinColumn({ name: 'userId' })
-  userId?: UserEntity
+  userId?: Relation<UserEntity>
 
   @Column()
   deletedAt: Date

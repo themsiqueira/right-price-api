@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 
 import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
-import { GetEmporiumInput } from '@app/product/input/get-emporium.input'
-import { GetEmporiumOutput } from '@app/product/output/get-emporium.output'
+import { GetEmporiumInput } from '@app/emporium/input/get-emporium.input'
+import { GetEmporiumOutput } from '@app/emporium/output/get-emporium.output'
 
 @Injectable()
 export class GetEmporium {

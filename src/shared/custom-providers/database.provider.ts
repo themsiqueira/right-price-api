@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm'
 
 export const databaseProviders = [
   {
-    provide: 'DATA_SOURCE',
+    provide: DataSource,
     useFactory: async (configService: ConfigService): Promise<DataSource> => {
       const dataSource = new DataSource({
         type: 'postgres',

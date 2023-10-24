@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn, Relation } from 'typeorm'
 
 import { PersonEntity } from '@app/user/entities/person.entity'
 
@@ -9,7 +9,7 @@ export class UserEntity {
 
   @OneToOne(() => PersonEntity)
   @JoinColumn({ name: 'personId' })
-  person: PersonEntity
+  person: Relation<PersonEntity>
 
   @Column()
   email: string

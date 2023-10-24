@@ -3,9 +3,9 @@ import { HttpStatus } from '@nestjs/common/enums'
 import { Injectable } from '@nestjs/common'
 
 import { StandardError } from '@app/shared/interface/error.interface'
-import { ErrorService } from '@app/shared/service/error.service'
 import ErrorType from '@app/shared/constant/error.enum'
 import { has } from '@app/shared/helper/type-guard.helper'
+import { ErrorService } from '@app/shared/services/error.service'
 
 type FinalException = {
   exception: StandardError

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { DataSource, Repository } from 'typeorm'
 
 import { ValidateService } from '@app/shared/services/validate.service'
 import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, OneToOne, JoinColumn, Relation } from 'typeorm'
 
 import { CouponEntity } from '@app/emporium/entities/coupon.entity'
 import { UserEntity } from '@app/user/entities/user.entity'
@@ -10,11 +10,11 @@ export class WalletEntity {
 
   @OneToOne(() => UserEntity)
   @JoinColumn({ name: 'userId' })
-  userId: UserEntity
+  userId: Relation<UserEntity>
 
   @ManyToMany(() => CouponEntity)
   @JoinTable()
-  couponsIds: CouponEntity[]
+  couponsIds: Relation<CouponEntity>[]
 
   @Column()
   deletedAt: Date

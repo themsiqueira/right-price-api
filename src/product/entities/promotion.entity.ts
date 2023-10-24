@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, OneToOne, JoinColumn, Relation } from 'typeorm'
 
 import { ProductEntity } from '@app/product/entities/product.entity'
 import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'
@@ -10,15 +10,16 @@ export class PromotionEntity {
   id: string
 
   @OneToMany(() => ProductEntity, (product) => product.id)
-  products: ProductEntity[]
+  products: Relation<ProductEntity>[]
 
   @OneToOne(() => EmporiumEntity)
   @JoinColumn({ name: 'emporiumId' })
-  emporiumId: EmporiumEntity
+  emporiumId: Relation<EmporiumEntity>
 
   @OneToOne(() => UserEntity)
   @JoinColumn({ name: 'Reporter_userId' })
-  user: UserEntity
+  user: Relation<UserEntity>
+
   @Column()
   price: number
 
