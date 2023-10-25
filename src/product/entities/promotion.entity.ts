@@ -32,4 +32,7 @@ export class PromotionEntity {
 
   @Column()
   isDeleted: boolean
+
+  @Column()
+  deletedAt: Date
 }
