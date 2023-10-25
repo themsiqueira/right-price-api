@@ -1,10 +1,15 @@
+import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+
 export class CreateEmporiumOutput {
-    id: number;
-    message: string;
-  
-    constructor(id: number, message: string) {
-      this.id = id;
-      this.message = message;
-    }
-  }
-  
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  address: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  id: number; 
+}

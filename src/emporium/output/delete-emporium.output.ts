@@ -1,10 +1,16 @@
+import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+
 export class DeleteEmporiumOutput {
-    id: number; // ID of the soft-deleted Emporium entity
-    message: string;
-  
-    constructor(id: number, message: string) {
-      this.id = id;
-      this.message = message;
-    }
-  }
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  address: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  id: number; 
+}
   
