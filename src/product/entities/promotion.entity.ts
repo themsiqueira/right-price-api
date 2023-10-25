@@ -29,4 +29,7 @@ export class PromotionEntity {
 
   @Column()
   expiresAt: Date
+
+  @Column()
+  isDeleted: boolean
 }
