@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateEmporiumInput {
   @IsString()
@@ -9,7 +9,7 @@ export class CreateEmporiumInput {
   @IsNotEmpty()
   address: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  id: number; 
+  id: string; 
 }
