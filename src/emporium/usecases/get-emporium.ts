@@ -25,7 +25,6 @@ export class GetEmporium {
       id: emporium.id,
       name: emporium.name,
       address: emporium.address,
-      userId: emporium.userId,
       createdAt: emporium.createdAt,
       expiresAt: emporium.expiresAt,
       isDeleted: emporium.isDeleted,
