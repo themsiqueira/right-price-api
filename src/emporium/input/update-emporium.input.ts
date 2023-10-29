@@ -6,7 +6,6 @@ export class UpdateEmporiumInput {
     @IsString()
     name: string;
 
-    @IsString()
     userId: Relation<UserEntity>;
 
     @IsString()
