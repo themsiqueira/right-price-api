@@ -1,19 +1,11 @@
-import { InputType, Field } from '@nestjs/graphql';
-
-@InputType()
 export class CreateUserInput {
-  @Field()
-  readonly name: string;
+  readonly name: string
 
-  @Field()
-  readonly documentNumber: string;
+  readonly documentNumber: string
 
-  @Field()
-  readonly birthDate: Date;
+  readonly birthDate: Date
 
-  @Field()
-  readonly email: string;
+  readonly email: string
 
-  @Field()
-  readonly password: string;
+  readonly password: string
 }

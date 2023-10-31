@@ -1,31 +1,30 @@
 import { Injectable } from '@nestjs/common'
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+
 import { DeleteUserInput } from '@app/user/input/delete-user.input'
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UserEntity } from '@app/user/entities/user.entity';
+import { UserEntity } from '@app/user/entities/user.entity'
+import { ValidateService } from '@app/shared/services/validate.service'
 
 @Injectable()
 export class DeleteUser {
   constructor(
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+    private readonly validateService: ValidateService
   ) {}
 
   async handle(input: DeleteUserInput): Promise<void> {
+    const inputValidated = await this.validateService.validateAndTransformInput(DeleteUserInput, input)
     const user = await this.userRepository.findOne({
-      where: { id: input.id },
-    });
+      where: { id: inputValidated.id }
+    })
 
     if (!user) {
-      throw new Error('Usuário não encontrado.');
+      throw new Error('Usuário não encontrado.')
     }
 
-    await this.userRepository.remove(user);
+    user.deletedAt = new Date()
+
+    await this.userRepository.save(user)
   }
 }
-
-
-
-
-
-

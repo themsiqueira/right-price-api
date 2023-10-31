@@ -1,48 +1,45 @@
 import { Injectable } from '@nestjs/common'
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { plainToClass } from 'class-transformer'
+
 import { ListUserInput } from '@app/user/input/list-user.input'
 import { ListUserOutput } from '@app/user/output/list-user.output'
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UserEntity } from '@app/user/entities/user.entity';
-import { PersonEntity } from '@app/user/entities/person.entity';
-
+import { UserEntity } from '@app/user/entities/user.entity'
+import { PersonEntity } from '@app/user/entities/person.entity'
+import { ValidateService } from '@app/shared/services/validate.service'
+import { GetUserOutput } from '@app/user/output/get-user.output'
 
 @Injectable()
 export class ListUser {
   constructor(
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(PersonEntity) private readonly personRepository: Repository<PersonEntity>,
+    private readonly validateService: ValidateService
   ) {}
 
-  async handle(input: ListUserInput): Promise<ListUserOutput[]> {
-    const queryBuilder = this.userRepository.createQueryBuilder('user');
-    queryBuilder.leftJoinAndMapOne('user.person', PersonEntity, 'person', 'person.id = user.personId');
+  async handle(input: ListUserInput): Promise<ListUserOutput> {
+    const inputValidated = await this.validateService.validateAndTransformInput(ListUserInput, input)
+    const queryBuilder = this.userRepository.createQueryBuilder('user')
+    queryBuilder
+      .leftJoinAndMapOne('user.person', PersonEntity, 'person', 'person.id = user.personId')
+      .where('user.person.name LIKE :name', { name: `%${inputValidated.name}%` })
 
-    if (input.name) {
-      queryBuilder.andWhere('person.name LIKE :name', { name: `%${input.name}%` });
+    const page = inputValidated.page || 1
+    const limit = inputValidated.limit || 10
+    const skip = (page - 1) * limit
+
+    const total = await queryBuilder.getCount()
+
+    const users = await queryBuilder.skip(skip).take(limit).getMany()
+
+    return this.mapOutput(total, page, users)
+  }
+
+  private mapOutput(total: number, page: number, data: Array<UserEntity>): ListUserOutput {
+    return {
+      total,
+      page,
+      data: data.map((item) => plainToClass(GetUserOutput, item))
     }
-
-    if (input.email) {
-      queryBuilder.andWhere('user.email LIKE :email', { email: `%${input.email}%` });
-    }
-
-    if (input.documentNumber) {
-      queryBuilder.andWhere('person.documentNumber LIKE :documentNumber', { documentNumber: `%${input.documentNumber}%` });
-    }
-
-    if (input.birthDate) {
-      queryBuilder.andWhere('person.birthDate = :birthDate', { birthDate: input.birthDate });
-    }
-
-    const users = await queryBuilder.getMany();
-
-    return users.map(user => ({
-      id: user.id,
-      name: user.person.name,
-      email: user.email,
-      documentNumber: user.person.documentNumber,
-      birthDate: user.person.birthDate,
-    }));
   }
 }

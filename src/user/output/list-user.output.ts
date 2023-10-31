@@ -1,19 +1,7 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { GetUserOutput } from '@app/user/output/get-user.output'
 
-@ObjectType()
 export class ListUserOutput {
-    @Field()
-    readonly id: string;
-  
-    @Field()
-    readonly name: string;
-  
-    @Field()
-    readonly email: string;
-  
-    @Field()
-    readonly documentNumber: string;
-  
-    @Field()
-    readonly birthDate: Date;
+  total: number
+  page: number
+  data: Array<GetUserOutput>
 }
