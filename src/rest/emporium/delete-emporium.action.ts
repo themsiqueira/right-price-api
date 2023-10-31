@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Delete } from '@nestjs/common'
+import { Body, Controller, HttpCode, HttpStatus, Delete } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,

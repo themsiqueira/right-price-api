@@ -1,6 +1,4 @@
-import { Body, Controller, HttpStatus, HttpCode, Injectable, Post } from '@nestjs/common'
-
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
+import { Body, Controller, HttpStatus, HttpCode, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -10,14 +8,14 @@ import {
   ApiTags,
   ApiUnprocessableEntityResponse
 } from '@nestjs/swagger'
+
 import { UpdateProductOutput } from '@app/product/output/update-product.output'
 import { UpdateProductInput } from '@app/product/input/update-product.input'
-import { HttpError, HttpValidationError } from '../swagger/error.model'
 import { UpdateProduct } from '@app/product/usecases/update-product'
+import { HttpError, HttpValidationError } from '@app/rest/swagger/error.model'
 
 @ApiTags('Product')
 @Controller('/product')
-
 export class UpdateProductAction {
   constructor(private handler: UpdateProduct) {}
   @ApiOperation({ operationId: 'UpdateProduct', summary: 'Update Product' })
@@ -26,16 +24,16 @@ export class UpdateProductAction {
     description: 'Bad request response'
   })
   @ApiConflictResponse({ type: HttpError, description: 'Conflict response' })
-    @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
-    @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
-    @ApiResponse({
-      status: HttpStatus.ACCEPTED,
-      type: UpdateProductInput,
-      description: 'Success response'
-    })
-    @Post()
-    @HttpCode(HttpStatus.ACCEPTED)
-    async handle(@Body() input: UpdateProductInput): Promise<UpdateProductOutput> {
-      return this.handler.handle(input)
-    }
+  @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
+  @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
+  @ApiResponse({
+    status: HttpStatus.ACCEPTED,
+    type: UpdateProductInput,
+    description: 'Success response'
+  })
+  @Post()
+  @HttpCode(HttpStatus.ACCEPTED)
+  async handle(@Body() input: UpdateProductInput): Promise<UpdateProductOutput> {
+    return this.handler.handle(input)
+  }
 }

@@ -1,8 +1,4 @@
-import { Body, Controller, HttpStatus, HttpCode, Injectable, Post } from '@nestjs/common'
-
-import { UpdateEmporiumInput } from '@app/emporium/input/update-emporium.input'
-import { UpdateEmporiumOutput } from '@app/emporium/output/update-emporium.output'
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
+import { Body, Controller, HttpStatus, HttpCode, Post } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -12,8 +8,11 @@ import {
   ApiTags,
   ApiUnprocessableEntityResponse
 } from '@nestjs/swagger'
+
+import { UpdateEmporiumInput } from '@app/emporium/input/update-emporium.input'
+import { UpdateEmporiumOutput } from '@app/emporium/output/update-emporium.output'
 import { UpdateEmporium } from '@app/emporium/usecases/update-emporium'
-import { HttpError, HttpValidationError } from '../swagger/error.model'
+import { HttpError, HttpValidationError } from '@app/rest/swagger/error.model'
 
 @ApiTags('Emporium')
 @Controller('/emporium')

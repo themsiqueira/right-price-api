@@ -10,7 +10,7 @@ export class PromotionEntity {
   id: string
 
   @ManyToOne(() => ProductEntity, (product) => product.promotions)
-  promotion: Relation<ProductEntity>
+  product: Relation<ProductEntity>
 
   // TODO: MAke required
   @OneToOne(() => EmporiumEntity)

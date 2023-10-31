@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Get, Query } from '@nestjs/common'
+import { Controller, HttpCode, HttpStatus, Get, Query } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -35,7 +35,7 @@ export class ListEmporiumAction {
   })
   @Get()
   @HttpCode(HttpStatus.OK)
-  async handle(@Body() input: ListEmporiumInput): Promise<ListEmporiumOutput[]> {
+  async handle(@Query() input: ListEmporiumInput): Promise<ListEmporiumOutput> {
     return this.handler.handle(input)
   }
 }
