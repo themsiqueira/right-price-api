@@ -27,4 +27,7 @@ export class EmporiumEntity {
 
   @Column()
   expiresAt: Date
+
+  @Column()
+  isDeleted: boolean
 }

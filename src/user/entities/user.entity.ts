@@ -26,4 +26,7 @@ export class UserEntity {
 
   @Column()
   expiresAt: Date
+
+  @Column()
+  isDeleted: boolean
 }
