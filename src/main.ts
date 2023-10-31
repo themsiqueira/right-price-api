@@ -8,7 +8,7 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
   useContainer(app.select(AppModule), { fallbackOnErrors: true })
 
-  const config = new DocumentBuilder().setTitle('Payments API').setDescription('Payments').setVersion('1.0.0').build()
+  const config = new DocumentBuilder().setTitle('Right Price API').setDescription('SoftwareEnginner').setVersion('1.0.0').build()
 
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('docs', app, document)
