@@ -16,24 +16,24 @@ import { DeleteProduct } from '@app/product/usecases/delete-product'
 @ApiTags('Product')
 @Controller('/product')
 export class DeleteProductAction {
-    constructor(private handler: DeleteProduct) {}
+  constructor(private handler: DeleteProduct) {}
 
-    @ApiOperation({ operationId: 'DeleteProduct', summary: 'Delete Product' })
-    @ApiBadRequestResponse({
-        type: HttpValidationError,
-        description: 'Bad request response'
-    })
-    @ApiConflictResponse({ type: HttpError, description: 'Conflict response' })
-    @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
-    @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
-    @ApiResponse({
-        status: HttpStatus.NO_CONTENT,
-        type: DeleteProductInput,
-        description: 'Success response'
-    })
-    @Delete()
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async handle(@Body() input: DeleteProductInput): Promise<void> {
-        return this.handler.handle(input)
-    }
+  @ApiOperation({ operationId: 'DeleteProduct', summary: 'Delete Product' })
+  @ApiBadRequestResponse({
+    type: HttpValidationError,
+    description: 'Bad request response'
+  })
+  @ApiConflictResponse({ type: HttpError, description: 'Conflict response' })
+  @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
+  @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    type: DeleteProductInput,
+    description: 'Success response'
+  })
+  @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async handle(@Body() input: DeleteProductInput): Promise<void> {
+    return this.handler.handle(input)
+  }
 }

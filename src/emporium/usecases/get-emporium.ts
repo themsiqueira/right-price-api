@@ -1,35 +1,29 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { plainToClass } from 'class-transformer'
 
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
 import { GetEmporiumInput } from '@app/emporium/input/get-emporium.input'
 import { GetEmporiumOutput } from '@app/emporium/output/get-emporium.output'
-import { InjectRepository } from '@nestjs/typeorm'
-import { EmporiumEntity } from '../entities/emporium.entity'
-import { Repository } from 'typeorm'
+import { ValidateService } from '@app/shared/services/validate.service'
+import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'
 
 @Injectable()
 export class GetEmporium {
-  constructor (
+  constructor(
     @InjectRepository(EmporiumEntity)
     private readonly emporiumRepository: Repository<EmporiumEntity>,
+    private readonly validateService: ValidateService
   ) {}
-  
-  async handle (input: GetEmporiumInput): Promise<GetEmporiumOutput> {
-    const emporium = await this.emporiumRepository.findOne({where: { id: input.id }});
 
-    if (!emporium){
-      throw new NotFoundException('Emporium not found');
+  async handle(input: GetEmporiumInput): Promise<GetEmporiumOutput> {
+    const inputValidated = await this.validateService.validateAndTransformInput(GetEmporiumInput, input)
+    const emporium = await this.emporiumRepository.findOne({ where: { id: inputValidated.id } })
+
+    if (!emporium) {
+      throw new NotFoundException('Emporium not found')
     }
 
-    const emporiumOutput: GetEmporiumOutput = {
-      id: emporium.id,
-      name: emporium.name,
-      address: emporium.address,
-      createdAt: emporium.createdAt,
-      expiresAt: emporium.expiresAt,
-      isDeleted: emporium.isDeleted,
-    };
-  
-  return emporiumOutput;
+    return plainToClass(GetEmporiumOutput, emporium)
   }
 }

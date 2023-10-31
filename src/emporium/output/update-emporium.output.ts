@@ -1,22 +1,24 @@
-import { UserEntity } from "@app/user/entities/user.entity";
-import { Relation } from "typeorm";
+import { Expose } from 'class-transformer'
+import { ApiProperty } from '@nestjs/swagger'
 
 export class UpdateEmporiumOutput {
-    id: string;
-    name: string;
-    address: string;
-    userId: Relation<UserEntity>;
-    createdAt: Date;
-    expiresAt: Date;
-    isDeleted: boolean;
+  @Expose()
+  @ApiProperty()
+  id: string
 
-    constructor(id, name, address, userId, createdAt, expiresAt, isDeleted) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.userId = userId;
-        this.createdAt = createdAt;
-        this.expiresAt = expiresAt;
-        this.isDeleted = isDeleted;
-    }
+  @Expose()
+  @ApiProperty()
+  name: string
+
+  @Expose()
+  @ApiProperty()
+  address: string
+
+  @Expose()
+  @ApiProperty()
+  createdAt: Date
+
+  @Expose()
+  @ApiProperty()
+  expiresAt: Date
 }

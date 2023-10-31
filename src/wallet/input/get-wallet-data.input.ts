@@ -1,1 +1,3 @@
-export class GetWalletDataInput {}
+export class GetWalletDataInput {
+  userId: string
+}

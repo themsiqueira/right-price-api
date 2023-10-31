@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn, Relation } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn, Relation, UpdateDateColumn } from 'typeorm'
 
 import { UserEntity } from '@app/user/entities/user.entity'
 
@@ -10,7 +10,6 @@ export class EmporiumEntity {
   @Column()
   name: string
 
-  // verificar de separar address em street, number, complement, city, state, country, zipcode
   @Column()
   address: string
 
@@ -26,8 +25,6 @@ export class EmporiumEntity {
   createdAt: Date
 
   @Column()
-  expiresAt: Date
-
-  @Column()
-  isDeleted: boolean
+  @UpdateDateColumn()
+  updatedAt: Date
 }

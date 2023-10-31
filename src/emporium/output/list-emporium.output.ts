@@ -1,10 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger'
+import { Expose } from 'class-transformer'
 
-@Entity()
+import { GetEmporiumOutput } from '@app/emporium/output/get-emporium.output'
+
 export class ListEmporiumOutput {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @Expose()
+  @ApiProperty()
+  total: number
 
-  @Column()
-  name: string;
+  @Expose()
+  @ApiProperty()
+  page: number
+
+  @Expose()
+  @ApiProperty()
+  data: Array<GetEmporiumOutput>
 }

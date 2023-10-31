@@ -1,15 +1,15 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator'
 
 export class CreateEmporiumOutput {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  id: string
 
   @IsString()
   @IsNotEmpty()
-  address: string;
+  name: string
 
   @IsString()
   @IsNotEmpty()
-  id: string; 
+  address: string
 }

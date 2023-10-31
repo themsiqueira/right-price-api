@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 
 import { CreateProductInput } from '@app/product/input/create-product.input'
 import { CreateProductOutput } from '@app/product/output/create-product.output'
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
-import { InjectRepository } from '@nestjs/typeorm'
-import { ProductEntity } from '../entities/product.entity'
-import { Repository } from 'typeorm'
 import { ValidateService } from '@app/shared/services/validate.service'
+import { ProductEntity } from '@app/product/entities/product.entity'
 
 @Injectable()
 export class CreateProduct {

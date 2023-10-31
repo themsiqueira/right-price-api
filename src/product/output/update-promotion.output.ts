@@ -1,1 +1,8 @@
-export class UpdatePromotionOutput {}
+import { GetProductOutput } from '@app/product/output/get-product.output'
+
+export class UpdatePromotionOutput {
+  id: string
+  product: GetProductOutput
+  price: number
+  validityDate: Date
+}

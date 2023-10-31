@@ -1,10 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { GetProductOutput } from '@app/product/output/get-product.output'
 
-@Entity()
 export class ListProductOutput {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-
-    @Column()
-    name: string;
+  total: number
+  page: number
+  data: Array<GetProductOutput>
 }

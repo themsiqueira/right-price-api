@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, Relation } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, Relation, OneToMany } from 'typeorm'
 
 import { PromotionEntity } from '@app/product/entities/promotion.entity'
 
@@ -10,7 +10,8 @@ export class ProductEntity {
   @Column()
   name: string
 
-  // verificar category
+  @Column()
+  isDeleted: boolean
 
   @Column()
   deletedAt: Date
@@ -19,12 +20,6 @@ export class ProductEntity {
   @CreateDateColumn()
   createdAt: Date
 
-  @ManyToOne(() => PromotionEntity, (promotion) => promotion.products)
-  promotion: Relation<PromotionEntity>
-
-  @Column()
-  expiresAt: Date
-
-  @Column()
-  isDeleted: boolean
+  @OneToMany(() => PromotionEntity, (promotion) => promotion.id)
+  promotions: Relation<PromotionEntity>[]
 }

@@ -1,36 +1,29 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { plainToClass } from 'class-transformer'
 
 import { GetProductInput } from '@app/product/input/get-product.input'
 import { GetProductOutput } from '@app/product/output/get-product.output'
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
-import { InjectRepository } from '@nestjs/typeorm'
-import { ProductEntity } from '../entities/product.entity'
-import { Repository } from 'typeorm'
+import { ValidateService } from '@app/shared/services/validate.service'
+import { ProductEntity } from '@app/product/entities/product.entity'
 
 @Injectable()
 export class GetProduct {
-  constructor (
+  constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
+    private readonly validateService: ValidateService
   ) {}
 
-  async handle (input: GetProductInput): Promise<GetProductOutput> {
-    const product = await this.productRepository.findOne({where: { id: input.id }});
+  async handle(input: GetProductInput): Promise<GetProductOutput> {
+    const inputValidated = await this.validateService.validateAndTransformInput(GetProductInput, input)
+    const product = await this.productRepository.findOne({ where: { id: inputValidated.id } })
 
-    if (!product){
-      throw new NotFoundException('Product not found');
+    if (!product) {
+      throw new NotFoundException('Product not found')
     }
 
-    const productOutput: GetProductOutput = {
-      id: product.id,
-      name: product.name,
-      promotion: product.promotion,
-      createdAt: product.createdAt,
-      expiresAt: product.expiresAt,
-      isDeleted: product.isDeleted,
-      deletedAt: product.deletedAt,
-    };
-
-    return productOutput;
+    return plainToClass(GetProductOutput, product)
   }
 }

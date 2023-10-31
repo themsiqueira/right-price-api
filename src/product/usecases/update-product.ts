@@ -1,45 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { plainToClass } from 'class-transformer'
 
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
 import { UpdateProductInput } from '@app/product/input/update-product.input'
 import { UpdateProductOutput } from '@app/product/output/update-product.output'
-import { InjectRepository } from '@nestjs/typeorm'
-import { ProductEntity } from '../entities/product.entity'
-import { Repository } from 'typeorm'
+import { ProductEntity } from '@app/product/entities/product.entity'
+import { ValidateService } from '@app/shared/services/validate.service'
 
 @Injectable()
 export class UpdateProduct {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
+    private readonly validateService: ValidateService
   ) {}
 
   async handle(input: UpdateProductInput): Promise<UpdateProductOutput> {
-    const product = await this.productRepository.findOne({where: {id: input.id}})
+    const inputValidated = await this.validateService.validateAndTransformInput(UpdateProductInput, input)
+    const product = await this.productRepository.findOne({ where: { id: inputValidated.id } })
     if (!product) {
       throw new NotFoundException('Product not found')
     }
 
-    if (input.name) {
-      product.name = input.name
+    if (inputValidated.name) {
+      product.name = inputValidated.name
     }
-
-    if (input.promotion) {
-      product.promotion = input.promotion
-    }
-
-    if (input.expiresAt) {
-      product.expiresAt = input.expiresAt
-    }
-
-    // Save the updated Product
     await this.productRepository.save(product)
 
-    // Build the UpdateProductOutput
-    const productOutput: UpdateProductOutput = {
-      id: product.id,
-    }
-
-    return productOutput
+    return plainToClass(UpdateProductOutput, inputValidated)
   }
 }

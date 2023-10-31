@@ -1,15 +1,9 @@
-import { IsNotEmpty, IsString } from 'class-validator';
-import { PromotionEntity } from '../entities/promotion.entity';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsNotEmpty, IsString } from 'class-validator'
 
 export class CreateProductInput {
   @IsString()
   @IsNotEmpty()
-  name: string;
-
-  // Optionally link to a PromotionEntity
-  promotionIds?: PromotionEntity[];
-
-  @IsString()
-  @IsNotEmpty()
-  id: string; 
+  @ApiProperty()
+  name: string
 }
