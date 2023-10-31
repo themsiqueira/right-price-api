@@ -24,4 +24,7 @@ export class ProductEntity {
 
   @Column()
   expiresAt: Date
+
+  @Column()
+  isDeleted: boolean
 }

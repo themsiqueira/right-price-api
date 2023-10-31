@@ -1,4 +1,4 @@
-FROM node:20-alpine AS BUILD_IMAGE
+FROM node:21-alpine AS BUILD_IMAGE
 
 RUN apk update && apk add --no-cache curl bash && rm -rf /var/cache/apk/*
 
@@ -16,7 +16,7 @@ COPY . .
 # build application
 RUN yarn build
 
-FROM node:20-alpine
+FROM node:21-alpine
 
 WORKDIR /application
 

@@ -27,4 +27,7 @@ export class CouponEntity {
 
   @Column()
   expiresAt: Date
+
+  @Column()
+  isDeleted: boolean
 }
