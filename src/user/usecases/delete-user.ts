@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
 
 import { DeleteUserInput } from '@app/user/input/delete-user.input'
 import { UserEntity } from '@app/user/entities/user.entity'
@@ -8,10 +8,14 @@ import { ValidateService } from '@app/shared/services/validate.service'
 
 @Injectable()
 export class DeleteUser {
+  private readonly userRepository: Repository<UserEntity>
+
   constructor(
-    @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.userRepository = this.dataSource.getRepository(UserEntity)
+  }
 
   async handle(input: DeleteUserInput): Promise<void> {
     const inputValidated = await this.validateService.validateAndTransformInput(DeleteUserInput, input)

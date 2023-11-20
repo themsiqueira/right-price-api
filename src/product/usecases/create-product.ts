@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
 
 import { CreateProductInput } from '@app/product/input/create-product.input'
 import { CreateProductOutput } from '@app/product/output/create-product.output'
@@ -9,10 +9,14 @@ import { ProductEntity } from '@app/product/entities/product.entity'
 
 @Injectable()
 export class CreateProduct {
+  private readonly productRepository: Repository<ProductEntity>
+
   constructor(
-    @InjectRepository(ProductEntity) private readonly productRepository: Repository<ProductEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.productRepository = this.dataSource.getRepository(ProductEntity)
+  }
 
   async handle(input: CreateProductInput): Promise<CreateProductOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(CreateProductInput, input)

@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common'
-import { Repository } from 'typeorm'
-import { InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
 
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
 import { UpdateUserInput } from '@app/user/input/update-user.input'
 import { UpdateUserOutput } from '@app/user/output/update-user.output'
 import { UserEntity } from '@app/user/entities/user.entity'
 import { PersonEntity } from '@app/user/entities/person.entity'
+import { ValidateService } from '@app/shared/services/validate.service'
 
 @Injectable()
 export class UpdateUser {
+  private readonly userRepository: Repository<UserEntity>
+  private readonly personRepository: Repository<PersonEntity>
+
   constructor(
-    @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(PersonEntity) private readonly personRepository: Repository<PersonEntity>
-  ) {}
+    @InjectEntityManager() private readonly dataSource: DataSource,
+    private readonly validateService: ValidateService
+  ) {
+    this.userRepository = this.dataSource.getRepository(UserEntity)
+    this.personRepository = this.dataSource.getRepository(PersonEntity)
+  }
 
   async handle(input: UpdateUserInput): Promise<UpdateUserOutput> {
     const user = await this.userRepository

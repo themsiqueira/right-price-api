@@ -14,7 +14,6 @@ import { GetProductInput } from '@app/product/input/get-product.input'
 import { GetProductOutput } from '@app/product/output/get-product.output'
 import { GetProduct } from '@app/product/usecases/get-product'
 
-
 @ApiTags('Product')
 @Controller('/product')
 export class GetProductAction {
