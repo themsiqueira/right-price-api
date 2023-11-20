@@ -1,12 +1,33 @@
-import { Injectable } from '@nestjs/common'
-
-import MethodNotImplementedException from '@app/shared/exception/method-not-implemented-exception.exception'
-import { GetPromotionInput } from '@app/product/input/get-promotion.input'
-import { GetPromotionOutput } from '@app/product/output/get-promotion.output'
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PromotionEntity } from '../entities/promotion.entity';
+import { GetPromotionInput } from '../input/get-promotion.input';
+import { GetPromotionOutput } from '../output/get-promotion.output';
 
 @Injectable()
 export class GetPromotion {
-  handle(input: GetPromotionInput): Promise<GetPromotionOutput> {
-    throw new MethodNotImplementedException(this.handle.name)
+  constructor(
+    @InjectRepository(PromotionEntity)
+    private readonly promotionRepository: Repository<PromotionEntity>,
+  ) {}
+
+  async handle(input: GetPromotionInput): Promise<GetPromotionOutput> {
+    const promotion = await this.promotionRepository.findOne({
+      where: { id: input.id },
+    });
+
+    if (!promotion) {
+      throw new NotFoundException('Promotion not found');
+    }
+
+    const promotionOutput: GetPromotionOutput = {
+      id: promotion.id,
+      price: promotion.price,
+      createdAt: promotion.createdAt,
+      expiresAt: promotion.expiresAt,
+    };
+
+    return promotionOutput;
   }
 }
