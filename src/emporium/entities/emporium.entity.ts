@@ -17,7 +17,7 @@ export class EmporiumEntity {
   @JoinColumn({ name: 'userId' })
   userId?: Relation<UserEntity>
 
-  @Column()
+  @Column({ nullable: true })
   deletedAt: Date
 
   @Column()

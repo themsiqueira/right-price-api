@@ -14,13 +14,10 @@ export class PersonEntity {
   @Column()
   birthDate: Date
 
-  @Column()
+  @Column({ nullable: true })
   deletedAt: Date
 
   @Column()
   @CreateDateColumn()
   createdAt: Date
-
-  @Column()
-  expiresAt: Date
 }
