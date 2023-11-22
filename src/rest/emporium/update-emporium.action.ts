@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, HttpCode, Post } from '@nestjs/common'
+import { Body, Controller, HttpStatus, HttpCode, Patch } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -33,7 +33,7 @@ export class UpdateEmporiumAction {
     type: UpdateEmporiumInput,
     description: 'Success response'
   })
-  @Post()
+  @Patch()
   @HttpCode(HttpStatus.ACCEPTED)
   async handle(@Body() input: UpdateEmporiumInput): Promise<UpdateEmporiumOutput> {
     return this.handler.handle(input)
