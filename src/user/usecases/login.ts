@@ -1,20 +1,25 @@
 import { Injectable } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-import { Repository } from 'typeorm'
-import { InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
 
 import { LoginInput } from '@app/user/input/login.input'
 import { LoginOutput } from '@app/user/output/login.output'
 import { UserEntity } from '@app/user/entities/user.entity'
 import { PersonEntity } from '@app/user/entities/person.entity'
+import { ValidateService } from '@app/shared/services/validate.service'
 
 @Injectable()
 export class Login {
+  private readonly userRepository: Repository<UserEntity>
+
   constructor(
-    @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(PersonEntity) private readonly personRepository: Repository<PersonEntity>
-  ) {}
+    @InjectEntityManager() private readonly dataSource: DataSource,
+    private readonly validateService: ValidateService
+  ) {
+    this.userRepository = this.dataSource.getRepository(UserEntity)
+  }
 
   async handle(input: LoginInput): Promise<LoginOutput> {
     const user = await this.userRepository

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
 import { plainToClass } from 'class-transformer'
 
 import { UpdatePromotionInput } from '@app/product/input/update-promotion.input'
@@ -10,11 +10,14 @@ import { PromotionEntity } from '@app/product/entities/promotion.entity'
 
 @Injectable()
 export class UpdatePromotion {
+  private readonly promotionRepository: Repository<PromotionEntity>
+
   constructor(
-    @InjectRepository(PromotionEntity)
-    private readonly promotionRepository: Repository<PromotionEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.promotionRepository = this.dataSource.getRepository(PromotionEntity)
+  }
 
   async handle(input: UpdatePromotionInput): Promise<UpdatePromotionOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(UpdatePromotionInput, input)

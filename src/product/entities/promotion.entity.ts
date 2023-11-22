@@ -32,9 +32,6 @@ export class PromotionEntity {
   @Column()
   expiresAt: Date
 
-  @Column()
-  isDeleted: boolean
-
-  @Column()
+  @Column({ nullable: true })
   deletedAt: Date
 }

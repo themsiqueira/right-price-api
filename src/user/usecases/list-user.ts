@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
 import { plainToClass } from 'class-transformer'
 
 import { ListUserInput } from '@app/user/input/list-user.input'
@@ -12,10 +12,13 @@ import { GetUserOutput } from '@app/user/output/get-user.output'
 
 @Injectable()
 export class ListUser {
+  private readonly userRepository: Repository<UserEntity>
   constructor(
-    @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.userRepository = this.dataSource.getRepository(UserEntity)
+  }
 
   async handle(input: ListUserInput): Promise<ListUserOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(ListUserInput, input)

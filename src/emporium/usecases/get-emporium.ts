@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
 import { plainToClass } from 'class-transformer'
 
 import { GetEmporiumInput } from '@app/emporium/input/get-emporium.input'
@@ -10,11 +10,13 @@ import { EmporiumEntity } from '@app/emporium/entities/emporium.entity'
 
 @Injectable()
 export class GetEmporium {
+  private readonly emporiumRepository: Repository<EmporiumEntity>
   constructor(
-    @InjectRepository(EmporiumEntity)
-    private readonly emporiumRepository: Repository<EmporiumEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.emporiumRepository = this.dataSource.getRepository(EmporiumEntity)
+  }
 
   async handle(input: GetEmporiumInput): Promise<GetEmporiumOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(GetEmporiumInput, input)

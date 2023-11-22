@@ -17,8 +17,7 @@ export class CouponEntity {
   @Column()
   quantity: number
 
-  @Column()
-  @UpdateDateColumn()
+  @Column({ nullable: true })
   deletedAt: Date
 
   @Column()
@@ -27,7 +26,4 @@ export class CouponEntity {
 
   @Column()
   expiresAt: Date
-
-  @Column()
-  isDeleted: boolean
 }

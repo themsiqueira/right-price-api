@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
 import { plainToClass } from 'class-transformer'
 
 import { ListPromotionOutput } from '@app/product/output/list-promotion.output'
@@ -11,11 +11,14 @@ import { GetPromotionOutput } from '@app/product/output/get-promotion.output'
 
 @Injectable()
 export class ListPromotion {
+  private readonly promotionRepository: Repository<PromotionEntity>
+
   constructor(
-    @InjectRepository(PromotionEntity)
-    private readonly promotionRepository: Repository<PromotionEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.promotionRepository = this.dataSource.getRepository(PromotionEntity)
+  }
 
   async handle(input: ListPromotionInput): Promise<ListPromotionOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(ListPromotionInput, input)

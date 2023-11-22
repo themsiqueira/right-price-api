@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
+import { InjectEntityManager } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { plainToClass } from 'class-transformer'
 
@@ -11,11 +11,15 @@ import { UserEntity } from '@app/user/entities/user.entity'
 
 @Injectable()
 export class CreateEmporium {
+  private readonly emporiumRepository: Repository<EmporiumEntity>
+  private readonly userRepository: Repository<UserEntity>
   constructor(
-    @InjectRepository(EmporiumEntity) private readonly emporiumRepository: Repository<EmporiumEntity>,
-    @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+    @InjectEntityManager() private readonly dataSource: DataSource,
     private readonly validateService: ValidateService
-  ) {}
+  ) {
+    this.emporiumRepository = this.dataSource.getRepository(EmporiumEntity)
+    this.userRepository = this.dataSource.getRepository(UserEntity)
+  }
 
   async handle(input: CreateEmporiumInput): Promise<CreateEmporiumOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(CreateEmporiumInput, input)

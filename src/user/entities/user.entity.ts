@@ -17,16 +17,10 @@ export class UserEntity {
   @Column()
   passwordHash: string
 
-  @Column()
+  @Column({ nullable: true })
   deletedAt: Date
 
   @Column()
   @CreateDateColumn()
   createdAt: Date
-
-  @Column()
-  expiresAt: Date
-
-  @Column()
-  isDeleted: boolean
 }
