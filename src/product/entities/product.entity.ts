@@ -10,11 +10,8 @@ export class ProductEntity {
   @Column()
   name: string
 
-  @Column()
-  isDeleted: boolean
-
-  @Column()
-  deletedAt: Date
+  @Column({ nullable: true })
+  deletedAt?: Date
 
   @Column()
   @CreateDateColumn()

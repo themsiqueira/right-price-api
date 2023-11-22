@@ -21,6 +21,7 @@ export class CreateProduct {
   async handle(input: CreateProductInput): Promise<CreateProductOutput> {
     const inputValidated = await this.validateService.validateAndTransformInput(CreateProductInput, input)
     const product = await this.productRepository.save(this.productRepository.create(inputValidated))
+    // TODO: call image api, and save as base64 on database
     return this.mapOutput(product)
   }
 
