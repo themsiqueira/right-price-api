@@ -18,6 +18,11 @@ import { CreateProductAction } from '@app/rest/product/create-product.action'
 import { ProductModule } from '@app/product/product.module'
 import { UserModule } from '@app/user/user.module'
 import { WalletModule } from '@app/wallet/wallet.module'
+import { CreatePromotionAction } from '@app/rest/product/create-promotion.action'
+import { GetPromotionAction } from '@app/rest/product/get-promotion.action'
+import { ListPromotionAction } from '@app/rest/product/list-promotion.action'
+import { UpdatePromotionAction } from '@app/rest/product/update-promotion.action'
+import { UploadPromotion } from '@app/rest/product/upload-promotion.action'
 
 @Module({
   imports: [SharedModule, EmporiumModule, ProductModule, UserModule, WalletModule],
@@ -35,7 +40,12 @@ import { WalletModule } from '@app/wallet/wallet.module'
     DeleteProductAction,
     GetProductAction,
     ListProductAction,
-    UpdateProductAction
+    UpdateProductAction,
+    CreatePromotionAction,
+    GetPromotionAction,
+    ListPromotionAction,
+    UpdatePromotionAction,
+    UploadPromotion
   ],
   exports: [HttpErrorService]
 })

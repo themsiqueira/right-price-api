@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -9,17 +9,17 @@ import {
   ApiUnprocessableEntityResponse
 } from '@nestjs/swagger'
 
+import { GetPromotionInput } from '@app/product/input/get-promotion.input'
+import { GetPromotionOutput } from '@app/product/output/get-promotion.output'
+import { GetPromotion } from '@app/product/usecases/get-promotion'
 import { HttpError, HttpValidationError } from '@app/rest/swagger/error.model'
-import { CreateProduct } from '@app/product/usecases/create-product'
-import { CreateProductInput } from '@app/product/input/create-product.input'
-import { CreateProductOutput } from '@app/product/output/create-product.output'
 
-@ApiTags('Product')
-@Controller('/product')
-export class CreateProductAction {
-  constructor(private handler: CreateProduct) {}
+@ApiTags('Promotion')
+@Controller('/promotion')
+export class GetPromotionAction {
+  constructor(private handler: GetPromotion) {}
 
-  @ApiOperation({ operationId: 'CreateProduct', summary: 'Create Product' })
+  @ApiOperation({ operationId: 'GetPromotion', summary: 'Get Promotion' })
   @ApiBadRequestResponse({
     type: HttpValidationError,
     description: 'Bad request response'
@@ -28,13 +28,13 @@ export class CreateProductAction {
   @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
   @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
   @ApiResponse({
-    status: HttpStatus.CREATED,
-    type: CreateProductOutput,
+    status: HttpStatus.OK,
+    type: GetPromotionOutput,
     description: 'Success response'
   })
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  async handle(@Body() input: CreateProductInput): Promise<CreateProductOutput> {
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async handle(@Param() input: GetPromotionInput): Promise<GetPromotionOutput> {
     return this.handler.handle(input)
   }
 }
