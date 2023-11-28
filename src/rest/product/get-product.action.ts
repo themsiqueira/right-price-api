@@ -24,19 +24,18 @@ export class GetProductAction {
     type: HttpValidationError,
     description: 'Bad request response'
   })
-
   @ApiConflictResponse({ type: HttpError, description: 'Conflict response' })
   @ApiBadRequestResponse({ type: HttpError, description: 'Bad request response' })
   @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
   @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
-    @ApiResponse({
-        status: HttpStatus.OK,
-        type: GetProductInput,
-        description: 'Success response'
-    })
-    @Get()
-    @HttpCode(HttpStatus.OK)
-    async handle(@Body() input: GetProductInput): Promise<GetProductOutput> {
-        return this.handler.handle(input)
-    }
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: GetProductInput,
+    description: 'Success response'
+  })
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async handle(@Body() input: GetProductInput): Promise<GetProductOutput> {
+    return this.handler.handle(input)
+  }
 }

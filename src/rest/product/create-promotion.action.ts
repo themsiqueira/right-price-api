@@ -9,17 +9,17 @@ import {
   ApiUnprocessableEntityResponse
 } from '@nestjs/swagger'
 
+import { CreatePromotionInput } from '@app/product/input/create-promotion.input'
+import { CreatePromotionOutput } from '@app/product/output/create-promotion.output'
+import { CreatePromotion } from '@app/product/usecases/create-promotion'
 import { HttpError, HttpValidationError } from '@app/rest/swagger/error.model'
-import { CreateProduct } from '@app/product/usecases/create-product'
-import { CreateProductInput } from '@app/product/input/create-product.input'
-import { CreateProductOutput } from '@app/product/output/create-product.output'
 
-@ApiTags('Product')
-@Controller('/product')
-export class CreateProductAction {
-  constructor(private handler: CreateProduct) {}
+@ApiTags('Promotion')
+@Controller('/promotion')
+export class CreatePromotionAction {
+  constructor(private handler: CreatePromotion) {}
 
-  @ApiOperation({ operationId: 'CreateProduct', summary: 'Create Product' })
+  @ApiOperation({ operationId: 'CreatePromotion', summary: 'Create Promotion' })
   @ApiBadRequestResponse({
     type: HttpValidationError,
     description: 'Bad request response'
@@ -29,12 +29,12 @@ export class CreateProductAction {
   @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
   @ApiResponse({
     status: HttpStatus.CREATED,
-    type: CreateProductOutput,
+    type: CreatePromotionOutput,
     description: 'Success response'
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async handle(@Body() input: CreateProductInput): Promise<CreateProductOutput> {
+  async handle(@Body() input: CreatePromotionInput): Promise<CreatePromotionOutput> {
     return this.handler.handle(input)
   }
 }

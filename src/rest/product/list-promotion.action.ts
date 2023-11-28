@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common'
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -9,17 +9,17 @@ import {
   ApiUnprocessableEntityResponse
 } from '@nestjs/swagger'
 
+import { ListPromotionOutput } from '@app/product/output/list-promotion.output'
+import { ListPromotionInput } from '@app/product/input/list-promotion.input'
+import { ListPromotion } from '@app/product/usecases/list-promotion'
 import { HttpError, HttpValidationError } from '@app/rest/swagger/error.model'
-import { CreateProduct } from '@app/product/usecases/create-product'
-import { CreateProductInput } from '@app/product/input/create-product.input'
-import { CreateProductOutput } from '@app/product/output/create-product.output'
 
-@ApiTags('Product')
-@Controller('/product')
-export class CreateProductAction {
-  constructor(private handler: CreateProduct) {}
+@ApiTags('Promotion')
+@Controller('/promotion')
+export class ListPromotionAction {
+  constructor(private handler: ListPromotion) {}
 
-  @ApiOperation({ operationId: 'CreateProduct', summary: 'Create Product' })
+  @ApiOperation({ operationId: 'ListPromotion', summary: 'List Promotion' })
   @ApiBadRequestResponse({
     type: HttpValidationError,
     description: 'Bad request response'
@@ -28,13 +28,13 @@ export class CreateProductAction {
   @ApiUnprocessableEntityResponse({ type: HttpError, description: 'Unprocessable entity response' })
   @ApiInternalServerErrorResponse({ type: HttpError, description: 'Internal server error response' })
   @ApiResponse({
-    status: HttpStatus.CREATED,
-    type: CreateProductOutput,
+    status: HttpStatus.OK,
+    type: ListPromotionOutput,
     description: 'Success response'
   })
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  async handle(@Body() input: CreateProductInput): Promise<CreateProductOutput> {
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async handle(@Query() input: ListPromotionInput): Promise<ListPromotionOutput> {
     return this.handler.handle(input)
   }
 }

@@ -27,7 +27,8 @@ export class CreateEmporium {
     const emporiumEntity = this.emporiumRepository.create(
       userFound
         ? <Partial<EmporiumEntity>>{ ...inputValidated, userId: userFound }
-        : <Partial<EmporiumEntity>>{ ...inputValidated, userId: userFound });
+        : <Partial<EmporiumEntity>>{ ...inputValidated, userId: userFound }
+    )
     const emporium = await this.emporiumRepository.save(emporiumEntity)
     return this.mapOutput(emporium)
   }
