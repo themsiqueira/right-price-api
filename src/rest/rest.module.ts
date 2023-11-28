@@ -22,7 +22,7 @@ import { CreatePromotionAction } from '@app/rest/product/create-promotion.action
 import { GetPromotionAction } from '@app/rest/product/get-promotion.action'
 import { ListPromotionAction } from '@app/rest/product/list-promotion.action'
 import { UpdatePromotionAction } from '@app/rest/product/update-promotion.action'
-import { UploadPromotion } from '@app/rest/product/upload-promotion.action'
+import { UploadPromotionAction } from '@app/rest/product/upload-promotion.action'
 
 @Module({
   imports: [SharedModule, EmporiumModule, ProductModule, UserModule, WalletModule],
@@ -45,7 +45,7 @@ import { UploadPromotion } from '@app/rest/product/upload-promotion.action'
     GetPromotionAction,
     ListPromotionAction,
     UpdatePromotionAction,
-    UploadPromotion
+    UploadPromotionAction
   ],
   exports: [HttpErrorService]
 })
