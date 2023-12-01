@@ -23,6 +23,11 @@ import { GetPromotionAction } from '@app/rest/product/get-promotion.action'
 import { ListPromotionAction } from '@app/rest/product/list-promotion.action'
 import { UpdatePromotionAction } from '@app/rest/product/update-promotion.action'
 import { UploadPromotionAction } from '@app/rest/product/upload-promotion.action'
+import { CreateUserAction } from './user/create-user.action'
+import { DeleteUserAction } from './user/delete-user.action'
+import { GetUserAction } from './user/get-user.action'
+import { ListUserAction } from './user/list-user.action'
+import { UpdateUserAction } from './user/update-user.action'
 
 @Module({
   imports: [SharedModule, EmporiumModule, ProductModule, UserModule, WalletModule],
@@ -45,7 +50,12 @@ import { UploadPromotionAction } from '@app/rest/product/upload-promotion.action
     GetPromotionAction,
     ListPromotionAction,
     UpdatePromotionAction,
-    UploadPromotionAction
+    UploadPromotionAction,
+    CreateUserAction,
+    DeleteUserAction,
+    GetUserAction,
+    ListUserAction,
+    UpdateUserAction
   ],
   exports: [HttpErrorService]
 })

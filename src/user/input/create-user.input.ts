@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsDate, IsNotEmpty } from 'class-validator'
-import { IsString } from 'class-validator/types/decorator/typechecker/IsString'
-
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator'
 export class CreateUserInput {
   @IsString()
   @IsNotEmpty()
@@ -13,7 +11,7 @@ export class CreateUserInput {
   @ApiProperty()
   readonly documentNumber: string
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   @ApiProperty()
   readonly birthDate: Date
@@ -26,5 +24,5 @@ export class CreateUserInput {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  readonly password: string
+  readonly passwordHash: string
 }
